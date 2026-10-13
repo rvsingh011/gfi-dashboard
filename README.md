@@ -162,15 +162,20 @@ npm run preview    # serve the production build locally
 
 ## Deploy
 
-It's a static single-page app (`dist/`), so any static host works. **Whichever you
-pick, add the deployed domain to Firebase → Authentication → Settings → Authorized
-domains**, or sign-in will be blocked from that URL.
+It's a static single-page app (`dist/`), so any static host works.
 
-- **Vercel / Netlify / Cloudflare Pages** — connect the GitHub repo; build command
-  `npm run build`, output directory `dist`. Add an SPA fallback to `index.html` if
-  the host doesn't do it automatically (Netlify: `/* /index.html 200`).
+- **Vercel** (recommended) — import the repo at [vercel.com](https://vercel.com);
+  it auto-detects Vite (build `npm run build`, output `dist`) and gives you a URL.
+- **Netlify / Cloudflare Pages** — connect the repo; build `npm run build`, output
+  `dist`. Add an SPA fallback if needed (Netlify: `/* /index.html 200`).
 - **Firebase Hosting** — `firebase init hosting` (public dir `dist`, single-page
   app = yes), then `npm run build && firebase deploy`.
+
+> **Note on auth:** the Firebase backend belongs to the vendor, so you can't change
+> its settings — and you don't need to. Email/password sign-in via the SDK works
+> from any origin (it already works from `localhost`), so the hosted URL just works.
+> ("Authorized domains" only restricts OAuth popup logins, which this app doesn't
+> use.)
 
 > **Sharing with family:** the deployed page is just a login screen until someone
 > signs in, so share the URL freely and give trusted family members the account
